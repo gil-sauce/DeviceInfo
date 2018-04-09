@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Device Info</string>
+    <string name="display_metrics">Display Metrics</string>
+</resources>
