@@ -1,5 +1,6 @@
 package com.saucelabs.deviceinfo
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,15 +11,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.view.Display
 
 
-class DeviceInfoActivity : AppCompatActivity() {
+class DeviceInfoActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device_info)
 
-        val metrics = resources.displayMetrics
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_FULLSCREEN
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val metrics = DisplayMetrics()
+        windowManager.defaultDisplay.getRealMetrics(metrics)
 
         val llDisplayMetrics = findViewById<LinearLayout>(R.id.llDisplayMetrics)
 
@@ -29,7 +39,6 @@ class DeviceInfoActivity : AppCompatActivity() {
         llDisplayMetrics.addView(createItemView("densityDpi", metrics.densityDpi.toString()))
         llDisplayMetrics.addView(createItemView("heightPixels", metrics.heightPixels.toString()))
         llDisplayMetrics.addView(createItemView("widthPixels", metrics.widthPixels.toString()))
-
     }
 
     private fun createItemView(name: String, value: String): View {
